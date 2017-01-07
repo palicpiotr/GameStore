@@ -1,0 +1,7 @@
+/.vs
+/GameStore.Domain/bin
+/GameStore.Domain/obj
+/GameStore.UnitTest/bin
+/GameStore.UnitTest/obj
+/GameStore.WebUI/bin
+/GameStore.WebUI/obj
