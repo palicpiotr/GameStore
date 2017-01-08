@@ -20,3 +20,4 @@ D:\Freelance\Game Store\GameStore\GameStore.Domain\bin\Debug\System.Web.WebPages
 D:\Freelance\Game Store\GameStore\GameStore.Domain\bin\Debug\System.Web.WebPages.Razor.xml
 D:\Freelance\Game Store\GameStore\GameStore.Domain\obj\Debug\GameStore.Domain.dll
 D:\Freelance\Game Store\GameStore\GameStore.Domain\obj\Debug\GameStore.Domain.pdb
+D:\Freelance\Game Store\GameStore\GameStore.Domain\obj\Debug\GameStore.Domain.csprojResolveAssemblyReference.cache

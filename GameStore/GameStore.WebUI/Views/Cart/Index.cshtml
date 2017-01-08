@@ -1,0 +1,39 @@
+﻿@model GameStore.WebUI.Models.CartIndexViewModel
+
+@{
+    ViewBag.Title = "GameStore: Your Cart";
+}
+
+<h2>Your Cart</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Count</th>
+            <th>Game</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.Cart.Lines)
+        {
+            <tr>
+                <td class="text-center">@string.Format("{0} штук", item.Quantity)</td>
+                <td class="text-left">@item.Game.Name</td>
+                <td class="text-right">@string.Format("{0} руб", item.Game.Price)</td>
+                <td class="text-right">@string.Format("{0} руб", (item.Quantity * item.Game.Price).ToString())</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">@string.Format("{0} руб", Model.Cart.ComputeTotalValue().ToString())</td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
+</div>
+
