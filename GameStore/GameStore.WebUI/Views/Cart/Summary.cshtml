@@ -1,0 +1,14 @@
+﻿@model GameStore.Domain.Entities.Cart
+
+<div class="navbar-right hidden-xs">
+    @Html.ActionLink("Заказать", "Index", "Cart",
+    new { returnUrl = Request.Url.PathAndQuery },
+    new { @class = "btn btn-default navbar-btn" })
+</div>
+
+<div class="navbar-text navbar-right">
+    <b class="hidden-xs">Your cart:</b>
+    @string.Format("{0} games", Model.Lines.Sum(s => s.Quantity)),
+    @string.Format("{0} rub", Model.ComputeTotalValue())
+</div>
+

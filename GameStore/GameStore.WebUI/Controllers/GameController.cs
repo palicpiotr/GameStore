@@ -18,7 +18,7 @@ namespace GameStore.WebUI.Controllers
         {
             this.repository = repo;
         }
-
+       
         public ViewResult List(string category, int page = 1)
         {
             GamesListViewModel model = new GamesListViewModel

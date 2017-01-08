@@ -4,8 +4,14 @@
     ViewBag.Title = "GameStore: Your Cart";
 }
 
+<style>
+    #cartTable td {
+        vertical-align: middle;
+    }
+</style>
+
 <h2>Your Cart</h2>
-<table class="table">
+<table id="cartTable" class="table">
     <thead>
         <tr>
             <th>Count</th>
@@ -15,25 +21,33 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var item in Model.Cart.Lines)
+        @foreach (var game in Model.Cart.Lines)
         {
             <tr>
-                <td class="text-center">@string.Format("{0} штук", item.Quantity)</td>
-                <td class="text-left">@item.Game.Name</td>
-                <td class="text-right">@string.Format("{0} руб", item.Game.Price)</td>
-                <td class="text-right">@string.Format("{0} руб", (item.Quantity * item.Game.Price).ToString())</td>
+                <td class="text-center">@game.Quantity</td>
+                <td class="text-left">@game.Game.Name</td>
+                <td class="text-right">@string.Format("{0} rub", game.Game.Price.ToString())</td>
+                <td class="text-right">@string.Format("{0} rub", game.Game.Price * game.Quantity)</td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("GameId", game.Game.GameId)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <input class="btn btn-sm btn-warning" type="submit" value="Delete" />
+                    }
+                </td>
             </tr>
         }
     </tbody>
     <tfoot>
         <tr>
             <td colspan="3" class="text-right">Total:</td>
-            <td class="text-right">@string.Format("{0} руб", Model.Cart.ComputeTotalValue().ToString())</td>
+            <td class="text-right">@string.Format("{0} rub", Model.Cart.ComputeTotalValue().ToString())</td>
         </tr>
     </tfoot>
 </table>
 
 <div class="text-center">
-    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>   
 </div>
 

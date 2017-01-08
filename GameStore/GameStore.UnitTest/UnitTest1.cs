@@ -295,5 +295,59 @@ namespace GameStore.UnitTest
             // Утверждение
             Assert.AreEqual(cart.Lines.Count(), 0);
         }
+
+        [TestMethod]
+        public void Can_Add_To_Cart()
+        {
+            //arrange - repository
+            Mock<IGameRepository> mock = new Mock<IGameRepository>();
+            mock.Setup(m => m.Games).Returns(new List<Game>
+            {
+                new Game {GameId = 1, Name="Game1", Category = "Kat1" }
+            });
+            //arrange - cart
+            Cart cart = new Cart();
+            //arrange - controller
+            CartController controller = new CartController(mock.Object);
+            //act - add the game to cart
+            controller.AddToCart(cart, 1, null);
+            //assert - 
+            Assert.AreEqual(cart.Lines.Count(), 1);
+            Assert.AreEqual(cart.Lines.ToList()[0].Game.GameId, 1);
+        }
+
+        /// <summary>
+        /// после добавления игры в корзину, должно быть перенаправление на страницу корзины
+        /// </summary>
+        [TestMethod]
+        public void Adding_Game_To_Cart_Goes_To_Cart_Screen()
+        {
+            Mock<IGameRepository> mock = new Mock<IGameRepository>();
+            mock.Setup(m => m.Games).Returns(new List<Game>
+            {
+               new Game {GameId=1, Name = "Game1", Category = "Kat1" }
+            }.AsQueryable());
+            //arrange - cart
+            Cart cart = new Cart();
+            //arrange - controller
+            CartController controller = new CartController(mock.Object);
+            RedirectToRouteResult result = controller.AddToCart(cart, 1, "URLIK");
+            //assert
+            Assert.AreEqual(result.RouteValues["action"], "Index");
+            Assert.AreEqual(result.RouteValues["returnUrl"], "URLIK");
+        }
+
+        [TestMethod]
+        public void Can_View_Cart_Contents()
+        {
+            //arrange - cart
+            Cart cart = new Cart();
+            //arrange - controller
+            CartController target = new CartController(null);
+            //act - call Index method
+            CartIndexViewModel result = (CartIndexViewModel)target.Index(cart, "URLIK").ViewData.Model;
+            Assert.AreSame(result.Cart, cart);
+            Assert.AreSame(result.ReturnUrl, "URLIK");
+        }
     }
 }
